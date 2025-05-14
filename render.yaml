@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: stream-capture
+    runtime: docker
+    plan: free
+    envVars:
+      - key: RCLONE_CONFIG
+        sync: false
+    dockerfilePath: Dockerfile
