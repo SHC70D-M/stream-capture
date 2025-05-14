@@ -34,9 +34,9 @@ def capture_snapshots():
         output_path = os.path.join(folder, f"{time_str}.jpg")
 
         if "youtube" in url:
-            command = f'yt-dlp --cookies {cookies_path} -f best -o - "{url}" | ffmpeg -loglevel error -y -i - -frames:v 1 "{output_path}"'
+            command = f'yt-dlp --cookies {cookies_path} -f b -o - "{url}" | ffmpeg -loglevel error -y -i - -frames:v 1 "{output_path}"'
         else:
-            command = f'yt-dlp -f best -o - "{url}" | ffmpeg -loglevel error -y -i - -frames:v 1 "{output_path}"'
+            command = f'yt-dlp -f b -o - "{url}" | ffmpeg -loglevel error -y -i - -frames:v 1 "{output_path}"'
 
         print(f"[{name}] Capturing frame at {date_str} {time_str}...")
         subprocess.call(command, shell=True)
