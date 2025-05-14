@@ -20,7 +20,13 @@ def capture_snapshots():
         "YT_Lokeren": "https://www.youtube.com/watch?v=HUeaYuBLNNQ"
     }
 
-    cookies_path = "cookies.txt"  # Make sure this is in your repo or container
+    cookies_path = "/app/cookies.txt"
+    cookies_env = os.getenv("COOKIES_TXT")
+    if cookies_env:
+        with open(cookies_path, "w") as f:
+            f.write(cookies_env)
+    else:
+        print("Warning: COOKIES_TXT environment variable not found. Some streams may not work.")
 
     for name, url in streams.items():
         folder = os.path.join("snapshots", name, date_str)
