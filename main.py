@@ -50,6 +50,21 @@ def capture_snapshots():
     print(f"[Debrouckere] Capturing frame at {date_str} {time_str}…")
     subprocess.call(debrouckere_cmd, shell=True)
 
+    # ✅ NEW: Add GroteMarkt webcam snapshot
+    grotemarkt_url = "https://livecam.brucity.be/LiveBrusselsWebcams/streams/vTm9wYDlwkAEO8mH1746783018793.m3u8"
+    folder = os.path.join("snapshots", "GroteMarkt", date_str)
+    os.makedirs(folder, exist_ok=True)
+    output_path = os.path.join(folder, f"{time_str}.jpg")
+
+    grotemarkt_cmd = (
+        f'ffmpeg -loglevel error -y '
+        f'-headers "Referer: https://www.brussel.be\\r\\nUser-Agent: Mozilla/5.0\\r\\n" '
+        f'-i "{grotemarkt_url}" -frames:v 1 "{output_path}"'
+    )
+    print(f"[GroteMarkt] Capturing frame at {date_str} {time_str}…")
+    subprocess.call(grotemarkt_cmd, shell=True)
+
+
     # Upload to Google Drive (via rclone)
     print("Uploading to Google Drive…")
     rclone_config = os.getenv("RCLONE_CONFIG")
